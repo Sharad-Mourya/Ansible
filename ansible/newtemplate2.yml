@@ -1,0 +1,23 @@
+---
+-  hosts: all
+   become: yes
+   become_user: root
+   become_method: sudo
+   vars:
+     i_need_pass: default_pass
+   tasks:
+     - name: modify prop file
+       lineinfile:
+         path: /var/www/html/index.html
+         regexp: '^<br>application_password='
+         line: '<br>application_password={{ i_need_pass }}'
+       notify:
+         - start httpd
+         - print the username
+
+   handlers:
+     - name: start httpd
+       service: name=httpd state=restarted
+    
+     - name: print the username
+       debug: msg="logged in as centos user" 

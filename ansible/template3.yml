@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks: 
+    - name: capture the output
+      command: pwd
+      register: current_dir
+      ignore_errors: True
+
+    - name: print current dir
+      debug: msg="dir is {{ current_dir.stdout }}"
+
+    - name : print distibution of ansible
+      debug: 
+        var: ansible_distribution
+
